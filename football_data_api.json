@@ -1,0 +1,72 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Football Data API",
+    "description": "Obtenir des scores et des statistiques sur les matchs et équipes de football.",
+    "version": "v1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.football-data-api.com"
+    }
+  ],
+  "paths": {
+    "/scores": {
+      "get": {
+        "description": "Obtenir les scores des matchs récents pour une date et une ligue donnée.",
+        "operationId": "GetMatchScores",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "description": "La date des matchs (format YYYY-MM-DD).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "league_id",
+            "in": "query",
+            "description": "L'ID de la ligue pour laquelle vous souhaitez obtenir les scores.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/teams": {
+      "get": {
+        "description": "Obtenir la liste des équipes pour une ligue donnée.",
+        "operationId": "GetTeamList",
+        "parameters": [
+          {
+            "name": "league_id",
+            "in": "query",
+            "description": "L'ID de la ligue pour laquelle vous souhaitez obtenir la liste des équipes.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "query",
+        "name": "key"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}
