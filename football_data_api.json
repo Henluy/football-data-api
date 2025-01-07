@@ -20,7 +20,7 @@
         "parameters": [
           {
             "name": "key",
-            "in": "query",
+            "in": "header",
             "description": "Votre clé API pour l'authentification.",
             "required": true,
             "schema": {
@@ -90,10 +90,11 @@
     "securitySchemes": {
       "ApiKeyAuth": {
         "type": "apiKey",
-        "in": "query",
-        "name": "key"
+        "in": "header",
+        "name": "X-Api-Key"
       }
-    }
+    },
+    "schemas": {}
   },
   "security": [
     {
