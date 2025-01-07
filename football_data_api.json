@@ -1,25 +1,27 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Football Data API",
-    "description": "Obtenir des scores et des statistiques sur les matchs et équipes de football.",
+    "title": "FootyStats API",
+    "description": "Connexion à l'API FootyStats pour récupérer les matchs et leurs statistiques.",
     "version": "v1.0.0"
   },
   "servers": [
     {
-      "url": "https://api.football-data-api.com"
+      "url": "https://api.football-data-api.com",
+      "description": "Serveur principal de FootyStats"
     }
   ],
   "paths": {
-    "/scores": {
+    "/league-matches": {
       "get": {
-        "description": "Obtenir les scores des matchs récents pour une date et une ligue donnée.",
-        "operationId": "GetMatchScores",
+        "summary": "Matchs d'une ligue",
+        "description": "Obtenez les matchs et leurs statistiques pour une ligue spécifique.",
+        "operationId": "getLeagueMatches",
         "parameters": [
           {
-            "name": "date",
+            "name": "key",
             "in": "query",
-            "description": "La date des matchs (format YYYY-MM-DD).",
+            "description": "Votre clé API pour l'authentification.",
             "required": true,
             "schema": {
               "type": "string"
@@ -28,35 +30,63 @@
           {
             "name": "league_id",
             "in": "query",
-            "description": "L'ID de la ligue pour laquelle vous souhaitez obtenir les scores.",
-            "required": false,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ]
-      }
-    },
-    "/teams": {
-      "get": {
-        "description": "Obtenir la liste des équipes pour une ligue donnée.",
-        "operationId": "GetTeamList",
-        "parameters": [
-          {
-            "name": "league_id",
-            "in": "query",
-            "description": "L'ID de la ligue pour laquelle vous souhaitez obtenir la liste des équipes.",
+            "description": "ID de la ligue pour laquelle vous souhaitez récupérer les matchs.",
             "required": true,
             "schema": {
               "type": "integer"
             }
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "Liste des matchs avec leurs statistiques.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "homeTeam": {
+                            "type": "string"
+                          },
+                          "awayTeam": {
+                            "type": "string"
+                          },
+                          "homeGoals": {
+                            "type": "integer"
+                          },
+                          "awayGoals": {
+                            "type": "integer"
+                          },
+                          "status": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Clé API invalide ou manquante."
+          },
+          "422": {
+            "description": "Paramètre requis manquant (comme league_id)."
+          }
+        }
       }
     }
   },
   "components": {
-    "schemas": {},
     "securitySchemes": {
       "ApiKeyAuth": {
         "type": "apiKey",
