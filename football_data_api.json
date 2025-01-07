@@ -1,67 +1,119 @@
-openapi: "3.1.0"
-info:
-  title: "FootyStats API"
-  description: "Connexion à l'API FootyStats pour récupérer les matchs et leurs statistiques."
-  version: "v1.0.0"
-servers:
-  - url: "https://api.football-data-api.com"
-    description: "Serveur principal de FootyStats"
-paths:
-  /league-matches:
-    get:
-      summary: "Matchs d'une ligue"
-      description: "Obtenez les matchs et leurs statistiques pour une ligue spécifique."
-      operationId: "getLeagueMatches"
-      parameters:
-        - name: "key"
-          in: "query"
-          description: "Votre clé API pour l'authentification."
-          required: true
-          schema:
-            type: "string"
-        - name: "league_id"
-          in: "query"
-          description: "ID de la ligue pour laquelle vous souhaitez récupérer les matchs."
-          required: true
-          schema:
-            type: "integer"
-      responses:
-        "200":
-          description: "Liste des matchs avec leurs statistiques."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/LeagueMatchesResponse"
-        "401":
-          description: "Clé API invalide ou manquante."
-        "422":
-          description: "Paramètre requis manquant (comme league_id)."
-components:
-  securitySchemes:
-    ApiKeyAuth:
-      type: "apiKey"
-      in: "query"
-      name: "key"
-  schemas:
-    LeagueMatchesResponse:
-      type: "object"
-      properties:
-        success:
-          type: "boolean"
-        data:
-          type: "array"
-          items:
-            type: "object"
-            properties:
-              homeTeam:
-                type: "string"
-              awayTeam:
-                type: "string"
-              homeGoals:
-                type: "integer"
-              awayGoals:
-                type: "integer"
-              status:
-                type: "string"
-security:
-  - ApiKeyAuth: []
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FootyStats API",
+    "description": "Connexion à l'API FootyStats pour récupérer les matchs et leurs statistiques.",
+    "version": "v1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.football-data-api.com",
+      "description": "Serveur principal de FootyStats"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Matches",
+      "description": "Endpoints relatifs aux matchs et statistiques"
+    },
+    {
+      "name": "Authentication",
+      "description": "Endpoints pour gérer l'authentification de l'utilisateur"
+    }
+  ],
+  "paths": {
+    "/league-matches": {
+      "get": {
+        "tags": ["Matches"],
+        "summary": "Matchs d'une ligue",
+        "description": "Obtenez les matchs et leurs statistiques pour une ligue spécifique.",
+        "operationId": "getLeagueMatches",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "query",
+            "description": "Votre clé API pour l'authentification.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "league_id",
+            "in": "query",
+            "description": "ID de la ligue pour laquelle vous souhaitez récupérer les matchs.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Liste des matchs avec leurs statistiques.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeagueMatchesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Clé API invalide ou manquante."
+          },
+          "422": {
+            "description": "Paramètre requis manquant (comme league_id)."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "query",
+        "name": "key"
+      }
+    },
+    "schemas": {
+      "LeagueMatchesResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "homeTeam": {
+                  "type": "string"
+                },
+                "awayTeam": {
+                  "type": "string"
+                },
+                "homeGoals": {
+                  "type": "integer"
+                },
+                "awayGoals": {
+                  "type": "integer"
+                },
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}
