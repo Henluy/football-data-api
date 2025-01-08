@@ -1,183 +1,73 @@
 {
-  "openapi": "3.1.0",
-  "info": {
-    "title": "FootyStats API",
-    "description": "API de données de football fournissant des statistiques détaillées pour les prédictions et analyses.",
-    "version": "v1.0.0"
-  },
-  "servers": [
-    {
-      "url": "https://api.football-data-api.com",
-      "description": "Serveur principal de l'API FootyStats"
-    }
-  ],
-  "paths": {
-    "/league-list": {
-      "get": {
-        "operationId": "getLeagueList",
-        "summary": "Obtenir la liste des ligues",
-        "description": "Récupère une liste de toutes les ligues disponibles.",
-        "parameters": [
-          {
-            "name": "key",
-            "in": "query",
-            "required": true,
-            "description": "Votre clé API",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Liste des ligues récupérée avec succès",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "league_id": {
-                        "type": "integer",
-                        "description": "Identifiant unique de la ligue"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "Nom de la ligue"
-                      },
-                      "country": {
-                        "type": "string",
-                        "description": "Pays de la ligue"
-                      }
-                    }
-                  }
-                }
+    "openapi": "3.1.0",
+    "info": {
+      "title": "FootyStats API",
+      "description": "API fournissant des statistiques de football. Requiert une clé API valide pour l'accès.",
+      "version": "v1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://api.football-data-api.com",
+        "description": "Serveur principal"
+      }
+    ],
+    "paths": {
+      "/league-list": {
+        "get": {
+          "operationId": "getLeagueList",
+          "summary": "Liste des ligues",
+          "description": "Récupère une liste de toutes les ligues disponibles. Requiert une clé API valide.",
+          "parameters": [
+            {
+              "name": "key",
+              "in": "query",
+              "required": true,
+              "description": "Votre clé API",
+              "schema": {
+                "type": "string",
+                "example": "21b5268e41a6dc509b2694bf67ae40cb22cd1e5489adc8625a3416255802ff36"
               }
             }
-          }
-        }
-      }
-    },
-    "/league-matches": {
-      "get": {
-        "operationId": "getLeagueMatches",
-        "summary": "Obtenir les matchs d'une ligue",
-        "description": "Récupère les matchs pour une ligue spécifique.",
-        "parameters": [
-          {
-            "name": "key",
-            "in": "query",
-            "required": true,
-            "description": "Votre clé API",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "league_id",
-            "in": "query",
-            "required": true,
-            "description": "Identifiant de la ligue",
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Liste des matchs récupérée avec succès",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "match_id": {
-                        "type": "integer",
-                        "description": "Identifiant unique du match"
-                      },
-                      "home_team": {
-                        "type": "string",
-                        "description": "Équipe à domicile"
-                      },
-                      "away_team": {
-                        "type": "string",
-                        "description": "Équipe à l'extérieur"
-                      },
-                      "date": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Date et heure du match"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/team": {
-      "get": {
-        "operationId": "getTeamData",
-        "summary": "Obtenir les données d'une équipe",
-        "description": "Récupère les informations et statistiques pour une équipe spécifique.",
-        "parameters": [
-          {
-            "name": "key",
-            "in": "query",
-            "required": true,
-            "description": "Votre clé API",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "team_id",
-            "in": "query",
-            "required": true,
-            "description": "Identifiant de l'équipe",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "include",
-            "in": "query",
-            "required": false,
-            "description": "Paramètre optionnel pour inclure des informations supplémentaires, comme les statistiques",
-            "schema": {
-              "type": "string",
-              "enum": ["stats"]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Données de l'équipe récupérées avec succès",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "team_id": {
-                      "type": "integer",
-                      "description": "Identifiant unique de l'équipe"
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "Nom de l'équipe"
-                    },
-                    "country": {
-                      "type": "string",
-                      "description": "Pays de l'équipe"
-                    },
-                    "stats": {
+          ],
+          "responses": {
+            "200": {
+              "description": "Liste des ligues récupérée avec succès",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
                       "type": "object",
-                      "description": "Statistiques de l'équipe, incluses si le paramètre 'include=stats' est présent"
+                      "properties": {
+                        "league_id": {
+                          "type": "integer",
+                          "description": "Identifiant unique de la ligue"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Nom de la ligue"
+                        },
+                        "country": {
+                          "type": "string",
+                          "description": "Pays de la ligue"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Clé API invalide ou non autorisée",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "description": "Message d'erreur"
+                      }
                     }
                   }
                 }
@@ -185,67 +75,100 @@
             }
           }
         }
-      }
-    },
-    "/league-tables": {
-      "get": {
-        "operationId": "getLeagueTables",
-        "summary": "Obtenir les classements d'une ligue",
-        "description": "Récupère les classements pour une saison de ligue spécifique.",
-        "parameters": [
-          {
-            "name": "key",
-            "in": "query",
-            "required": true,
-            "description": "Votre clé API",
-            "schema": {
-              "type": "string"
+      },
+      "/league-matches": {
+        "get": {
+          "operationId": "getLeagueMatches",
+          "summary": "Liste des matchs d'une ligue",
+          "description": "Récupère les matchs d'une ligue spécifique. Requiert une clé API valide et un `league_id`.",
+          "parameters": [
+            {
+              "name": "key",
+              "in": "query",
+              "required": true,
+              "description": "Votre clé API",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "league_id",
+              "in": "query",
+              "required": true,
+              "description": "Identifiant de la ligue",
+              "schema": {
+                "type": "integer"
+              }
+            },
+            {
+              "name": "season",
+              "in": "query",
+              "required": false,
+              "description": "Année de la saison",
+              "schema": {
+                "type": "integer"
+              }
+            },
+            {
+              "name": "from",
+              "in": "query",
+              "required": false,
+              "description": "Date de début au format YYYY-MM-DD",
+              "schema": {
+                "type": "string",
+                "format": "date"
+              }
+            },
+            {
+              "name": "to",
+              "in": "query",
+              "required": false,
+              "description": "Date de fin au format YYYY-MM-DD",
+              "schema": {
+                "type": "string",
+                "format": "date"
+              }
             }
-          },
-          {
-            "name": "season_id",
-            "in": "query",
-            "required": true,
-            "description": "Identifiant de la saison de la ligue",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "max_time",
-            "in": "query",
-            "required": false,
-            "description": "Horodatage UNIX. Définit cette valeur si vous souhaitez que l'API retourne les statistiques de la ligue et des équipes jusqu'à un certain moment.",
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Classements de la ligue récupérés avec succès",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "league_table": {
-                      "type": "array",
-                      "description": "Classement principal de la ligue",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "position": {
-                            "type": "integer",
-                            "description": "Position au classement"
-                          },
-                          "team_name": {
-                            "type": "string",
-                            "description": "Nom de l'équipe"
-                          },
-                          "points": {
-                            "type": "integer",
-                            "description": "Points accumulés"
+          ],
+          "responses": {
+            "200": {
+              "description": "Liste des matchs récupérée avec succès",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "match_id": {
+                          "type": "integer",
+                          "description": "Identifiant unique du match"
+                        },
+                        "home_team": {
+                          "type": "string",
+                          "description": "Nom de l'équipe à domicile"
+                        },
+                        "away_team": {
+                          "type": "string",
+                          "description": "Nom de l'équipe à l'extérieur"
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Date et heure du match"
+                        },
+                        "score": {
+                          "type": "object",
+                          "description": "Score final du match",
+                          "properties": {
+                            "home": {
+                              "type": "integer",
+                              "description": "Nombre de buts de l'équipe à domicile"
+                            },
+                            "away": {
+                              "type": "integer",
+                              "description": "Nombre de buts de l'équipe à l'extérieur"
+                            }
                           }
                         }
                       }
@@ -253,13 +176,16 @@
                   }
                 }
               }
+            },
+            "401": {
+              "description": "Clé API invalide ou non autorisée"
             }
           }
         }
       }
+    },
+    "components": {
+      "schemas": {}
     }
-  },
-  "components": {
-    "schemas": {}
   }
-}
+  
