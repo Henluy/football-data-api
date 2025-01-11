@@ -153,18 +153,10 @@
         "name": "x-rapidapi-key",
         "description": "Clé API utilisée pour l'authentification.",
         "default": "6fe0aa369948c88040c2ac549fb8ed54"
-      },
-      "XApiKey": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "XApi-Key",
-        "description": "Clé API alternative.",
-        "default": "6fe0aa369948c88040c2ac549fb8ed54"
       }
     }
   },
   "security": [
-    { "apiKeyAuth": [] },
-    { "XApiKey": [] }
+    { "apiKeyAuth": [] }
   ]
 }
