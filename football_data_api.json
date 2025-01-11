@@ -143,86 +143,6 @@
           }
         }
       }
-    },
-    "/teams/statistics": {
-      "get": {
-        "summary": "Récupérer les statistiques des équipes",
-        "description": "Permet de récupérer les statistiques détaillées d'une équipe pour une ligue et une saison spécifiques.",
-        "parameters": [
-          {
-            "name": "team",
-            "in": "query",
-            "required": true,
-            "description": "ID de l'équipe.",
-            "schema": { "type": "integer", "example": 33 }
-          },
-          {
-            "name": "league",
-            "in": "query",
-            "required": true,
-            "description": "ID de la ligue.",
-            "schema": { "type": "integer", "example": 39 }
-          },
-          {
-            "name": "season",
-            "in": "query",
-            "required": true,
-            "description": "Saison concernée.",
-            "schema": { "type": "integer", "example": 2025 }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Statistiques de l'équipe.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "response": {
-                      "type": "object",
-                      "properties": {
-                        "team": {
-                          "type": "object",
-                          "properties": {
-                            "id": { "type": "integer", "example": 33 },
-                            "name": { "type": "string", "example": "Manchester United" }
-                          }
-                        },
-                        "league": {
-                          "type": "object",
-                          "properties": {
-                            "id": { "type": "integer", "example": 39 },
-                            "name": { "type": "string", "example": "Premier League" }
-                          }
-                        },
-                        "goals": {
-                          "type": "object",
-                          "properties": {
-                            "for": {
-                              "type": "object",
-                              "properties": {
-                                "total": { "type": "integer", "example": 58 }
-                              }
-                            },
-                            "against": {
-                              "type": "object",
-                              "properties": {
-                                "total": { "type": "integer", "example": 30 }
-                              }
-                            }
-                          }
-                        },
-                        "points": { "type": "integer", "example": 65 }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
@@ -231,7 +151,8 @@
         "type": "apiKey",
         "in": "header",
         "name": "x-rapidapi-key",
-        "description": "Clé API utilisée pour l'authentification."
+        "description": "Clé API utilisée pour l'authentification.",
+        "default": "6fe0aa369948c88040c2ac549fb8ed54"
       }
     }
   },
