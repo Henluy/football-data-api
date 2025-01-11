@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.1.0",
   "info": {
     "title": "API Football - Documentation",
     "description": "API sportive permettant de récupérer des données sur les matchs, équipes, ligues, et statistiques.",
@@ -19,6 +19,7 @@
   "paths": {
     "/leagues": {
       "get": {
+        "operationId": "getLeagues",
         "summary": "Récupérer toutes les ligues disponibles",
         "description": "Retourne la liste des ligues disponibles dans l'API.",
         "responses": {
@@ -27,32 +28,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "response": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "league": {
-                            "type": "object",
-                            "properties": {
-                              "id": { "type": "integer", "example": 39 },
-                              "name": { "type": "string", "example": "Premier League" },
-                              "type": { "type": "string", "example": "League" }
-                            }
-                          },
-                          "country": {
-                            "type": "object",
-                            "properties": {
-                              "name": { "type": "string", "example": "England" },
-                              "code": { "type": "string", "example": "ENG" }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/LeaguesResponse"
                 }
               }
             }
@@ -62,6 +38,7 @@
     },
     "/fixtures": {
       "get": {
+        "operationId": "getFixtures",
         "summary": "Récupérer les matchs",
         "description": "Permet de récupérer les informations des matchs pour une date spécifique ou une ligue spécifique.",
         "parameters": [
@@ -93,50 +70,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "response": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "fixture": {
-                            "type": "object",
-                            "properties": {
-                              "id": { "type": "integer" },
-                              "date": { "type": "string", "example": "2025-01-15T12:30:00Z" }
-                            }
-                          },
-                          "league": {
-                            "type": "object",
-                            "properties": {
-                              "id": { "type": "integer", "example": 39 },
-                              "name": { "type": "string", "example": "Premier League" }
-                            }
-                          },
-                          "teams": {
-                            "type": "object",
-                            "properties": {
-                              "home": {
-                                "type": "object",
-                                "properties": {
-                                  "id": { "type": "integer", "example": 33 },
-                                  "name": { "type": "string", "example": "Manchester United" }
-                                }
-                              },
-                              "away": {
-                                "type": "object",
-                                "properties": {
-                                  "id": { "type": "integer", "example": 34 },
-                                  "name": { "type": "string", "example": "Chelsea" }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/FixturesResponse"
                 }
               }
             }
@@ -151,12 +85,54 @@
         "type": "apiKey",
         "in": "header",
         "name": "x-rapidapi-key",
-        "description": "Clé API utilisée pour l'authentification.",
-        "default": "6fe0aa369948c88040c2ac549fb8ed54"
+        "description": "Clé API utilisée pour l'authentification."
       }
-    }
-  },
-  "security": [
-    { "apiKeyAuth": [] }
-  ]
-}
+    },
+    "schemas": {
+      "LeaguesResponse": {
+        "type": "object",
+        "properties": {
+          "response": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "league": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "integer", "example": 39 },
+                    "name": { "type": "string", "example": "Premier League" },
+                    "type": { "type": "string", "example": "League" }
+                  }
+                },
+                "country": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string", "example": "England" },
+                    "code": { "type": "string", "example": "ENG" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FixturesResponse": {
+        "type": "object",
+        "properties": {
+          "response": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "fixture": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "integer" },
+                    "date": { "type": "string", "example": "2025-01-15T12:30:00Z" }
+                  }
+                },
+                "league": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "integer", "example": 39 },
