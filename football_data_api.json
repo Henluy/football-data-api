@@ -50,7 +50,12 @@
             "description": "Date des matchs au format YYYY-MM-DD.",
             "schema": {
               "type": "string",
-              "example": "2025-01-11"
+              "examples": [
+                {
+                  "value": "2025-01-11",
+                  "description": "Exemple de date au format AAAA-MM-JJ."
+                }
+              ]
             }
           },
           {
@@ -60,7 +65,12 @@
             "description": "Saison des matchs.",
             "schema": {
               "type": "integer",
-              "example": 2025
+              "examples": [
+                {
+                  "value": 2025,
+                  "description": "Exemple de saison."
+                }
+              ]
             }
           }
         ],
@@ -91,7 +101,12 @@
             "description": "ID de l'équipe.",
             "schema": {
               "type": "integer",
-              "example": 33
+              "examples": [
+                {
+                  "value": 33,
+                  "description": "ID de Manchester United."
+                }
+              ]
             }
           },
           {
@@ -101,7 +116,12 @@
             "description": "ID de la ligue.",
             "schema": {
               "type": "integer",
-              "example": 39
+              "examples": [
+                {
+                  "value": 39,
+                  "description": "ID de la Premier League."
+                }
+              ]
             }
           },
           {
@@ -111,7 +131,12 @@
             "description": "Saison concernée.",
             "schema": {
               "type": "integer",
-              "example": 2025
+              "examples": [
+                {
+                  "value": 2025,
+                  "description": "Exemple de saison."
+                }
+              ]
             }
           }
         ],
@@ -143,14 +168,29 @@
                 "league": {
                   "type": "object",
                   "properties": {
-                    "id": { "type": "integer", "example": 39 },
-                    "name": { "type": "string", "example": "Premier League" }
+                    "id": { 
+                      "type": "integer",
+                      "examples": [
+                        { "value": 39, "description": "Premier League." }
+                      ]
+                    },
+                    "name": { 
+                      "type": "string",
+                      "examples": [
+                        { "value": "Premier League", "description": "Nom de la ligue." }
+                      ]
+                    }
                   }
                 },
                 "country": {
                   "type": "object",
                   "properties": {
-                    "name": { "type": "string", "example": "England" }
+                    "name": {
+                      "type": "string",
+                      "examples": [
+                        { "value": "England", "description": "Nom du pays." }
+                      ]
+                    }
                   }
                 }
               }
@@ -170,14 +210,14 @@
                   "type": "object",
                   "properties": {
                     "id": { "type": "integer" },
-                    "date": { "type": "string", "example": "2025-01-11T12:30:00Z" }
+                    "date": { "type": "string" }
                   }
                 },
                 "league": {
                   "type": "object",
                   "properties": {
-                    "id": { "type": "integer", "example": 39 },
-                    "name": { "type": "string", "example": "Premier League" }
+                    "id": { "type": "integer" },
+                    "name": { "type": "string" }
                   }
                 },
                 "teams": {
@@ -186,15 +226,15 @@
                     "home": {
                       "type": "object",
                       "properties": {
-                        "id": { "type": "integer", "example": 33 },
-                        "name": { "type": "string", "example": "Manchester United" }
+                        "id": { "type": "integer" },
+                        "name": { "type": "string" }
                       }
                     },
                     "away": {
                       "type": "object",
                       "properties": {
-                        "id": { "type": "integer", "example": 34 },
-                        "name": { "type": "string", "example": "Chelsea" }
+                        "id": { "type": "integer" },
+                        "name": { "type": "string" }
                       }
                     }
                   }
@@ -213,28 +253,18 @@
               "team": {
                 "type": "object",
                 "properties": {
-                  "id": { "type": "integer", "example": 33 },
-                  "name": { "type": "string", "example": "Manchester United" }
+                  "id": { "type": "integer" },
+                  "name": { "type": "string" }
                 }
               },
               "goals": {
                 "type": "object",
                 "properties": {
-                  "for": {
-                    "type": "object",
-                    "properties": {
-                      "total": { "type": "integer", "example": 58 }
-                    }
-                  },
-                  "against": {
-                    "type": "object",
-                    "properties": {
-                      "total": { "type": "integer", "example": 30 }
-                    }
-                  }
+                  "for": { "type": "object" },
+                  "against": { "type": "object" }
                 }
               },
-              "points": { "type": "integer", "example": 65 }
+              "points": { "type": "integer" }
             }
           }
         }
