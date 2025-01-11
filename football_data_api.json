@@ -80,14 +80,6 @@
     }
   },
   "components": {
-    "securitySchemes": {
-      "apiKeyAuth": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "x-rapidapi-key",
-        "description": "Clé API utilisée pour l'authentification."
-      }
-    },
     "schemas": {
       "LeaguesResponse": {
         "type": "object",
@@ -136,3 +128,44 @@
                   "type": "object",
                   "properties": {
                     "id": { "type": "integer", "example": 39 },
+                    "name": { "type": "string", "example": "Premier League" }
+                  }
+                },
+                "teams": {
+                  "type": "object",
+                  "properties": {
+                    "home": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "integer", "example": 33 },
+                        "name": { "type": "string", "example": "Manchester United" }
+                      }
+                    },
+                    "away": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "integer", "example": 34 },
+                        "name": { "type": "string", "example": "Chelsea" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-rapidapi-key",
+        "description": "Clé API utilisée pour l'authentification."
+      }
+    }
+  },
+  "security": [
+    { "apiKeyAuth": [] }
+  ]
+}
