@@ -1,69 +1,225 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.0.1",
   "info": {
-    "title": "FootyStats API",
-    "description": "Connexion à l'API FootyStats pour récupérer les matchs et leurs statistiques.",
-    "version": "v1.0.0"
+    "title": "API Football - Documentation",
+    "description": "API sportive permettant de récupérer des données sur les matchs, équipes, ligues, et statistiques.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Support API-Football",
+      "url": "https://v3.football.api-sports.io",
+      "email": "support@api-sports.io"
+    }
   },
   "servers": [
     {
-      "url": "https://api.football-data-api.com",
-      "description": "Serveur principal de FootyStats"
-    }
-  ],
-  "tags": [
-    {
-      "name": "Matches",
-      "description": "Endpoints relatifs aux matchs et statistiques"
-    },
-    {
-      "name": "Authentication",
-      "description": "Endpoints pour gérer l'authentification de l'utilisateur"
+      "url": "https://v3.football.api-sports.io",
+      "description": "Serveur principal"
     }
   ],
   "paths": {
-    "/league-matches": {
+    "/leagues": {
       "get": {
-        "tags": ["Matches"],
-        "summary": "Matchs d'une ligue",
-        "description": "Obtenez les matchs et leurs statistiques pour une ligue spécifique.",
-        "operationId": "getLeagueMatches",
+        "summary": "Récupérer toutes les ligues disponibles",
+        "description": "Retourne la liste des ligues disponibles dans l'API.",
+        "responses": {
+          "200": {
+            "description": "Liste des ligues.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "league": {
+                            "type": "object",
+                            "properties": {
+                              "id": { "type": "integer", "example": 39 },
+                              "name": { "type": "string", "example": "Premier League" },
+                              "type": { "type": "string", "example": "League" }
+                            }
+                          },
+                          "country": {
+                            "type": "object",
+                            "properties": {
+                              "name": { "type": "string", "example": "England" },
+                              "code": { "type": "string", "example": "ENG" }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fixtures": {
+      "get": {
+        "summary": "Récupérer les matchs",
+        "description": "Permet de récupérer les informations des matchs pour une date spécifique ou une ligue spécifique.",
         "parameters": [
           {
-            "name": "key",
+            "name": "date",
             "in": "query",
-            "description": "Votre clé API pour l'authentification.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "required": false,
+            "description": "Date des matchs au format YYYY-MM-DD.",
+            "schema": { "type": "string", "example": "2025-01-15" }
           },
           {
-            "name": "league_id",
+            "name": "league",
             "in": "query",
-            "description": "ID de la ligue pour laquelle vous souhaitez récupérer les matchs.",
+            "required": false,
+            "description": "ID de la ligue.",
+            "schema": { "type": "integer" }
+          },
+          {
+            "name": "season",
+            "in": "query",
             "required": true,
-            "schema": {
-              "type": "integer"
-            }
+            "description": "Saison des matchs.",
+            "schema": { "type": "integer", "example": 2025 }
           }
         ],
         "responses": {
           "200": {
-            "description": "Liste des matchs avec leurs statistiques.",
+            "description": "Liste des matchs.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LeagueMatchesResponse"
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "fixture": {
+                            "type": "object",
+                            "properties": {
+                              "id": { "type": "integer" },
+                              "date": { "type": "string", "example": "2025-01-15T12:30:00Z" }
+                            }
+                          },
+                          "league": {
+                            "type": "object",
+                            "properties": {
+                              "id": { "type": "integer", "example": 39 },
+                              "name": { "type": "string", "example": "Premier League" }
+                            }
+                          },
+                          "teams": {
+                            "type": "object",
+                            "properties": {
+                              "home": {
+                                "type": "object",
+                                "properties": {
+                                  "id": { "type": "integer", "example": 33 },
+                                  "name": { "type": "string", "example": "Manchester United" }
+                                }
+                              },
+                              "away": {
+                                "type": "object",
+                                "properties": {
+                                  "id": { "type": "integer", "example": 34 },
+                                  "name": { "type": "string", "example": "Chelsea" }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/teams/statistics": {
+      "get": {
+        "summary": "Récupérer les statistiques des équipes",
+        "description": "Permet de récupérer les statistiques détaillées d'une équipe pour une ligue et une saison spécifiques.",
+        "parameters": [
+          {
+            "name": "team",
+            "in": "query",
+            "required": true,
+            "description": "ID de l'équipe.",
+            "schema": { "type": "integer", "example": 33 }
           },
-          "401": {
-            "description": "Clé API invalide ou manquante."
+          {
+            "name": "league",
+            "in": "query",
+            "required": true,
+            "description": "ID de la ligue.",
+            "schema": { "type": "integer", "example": 39 }
           },
-          "422": {
-            "description": "Paramètre requis manquant (comme league_id)."
+          {
+            "name": "season",
+            "in": "query",
+            "required": true,
+            "description": "Saison concernée.",
+            "schema": { "type": "integer", "example": 2025 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Statistiques de l'équipe.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "team": {
+                          "type": "object",
+                          "properties": {
+                            "id": { "type": "integer", "example": 33 },
+                            "name": { "type": "string", "example": "Manchester United" }
+                          }
+                        },
+                        "league": {
+                          "type": "object",
+                          "properties": {
+                            "id": { "type": "integer", "example": 39 },
+                            "name": { "type": "string", "example": "Premier League" }
+                          }
+                        },
+                        "goals": {
+                          "type": "object",
+                          "properties": {
+                            "for": {
+                              "type": "object",
+                              "properties": {
+                                "total": { "type": "integer", "example": 58 }
+                              }
+                            },
+                            "against": {
+                              "type": "object",
+                              "properties": {
+                                "total": { "type": "integer", "example": 30 }
+                              }
+                            }
+                          }
+                        },
+                        "points": { "type": "integer", "example": 65 }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -71,49 +227,15 @@
   },
   "components": {
     "securitySchemes": {
-      "ApiKeyAuth": {
+      "apiKeyAuth": {
         "type": "apiKey",
-        "in": "query",
-        "name": "key"
-      }
-    },
-    "schemas": {
-      "LeagueMatchesResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "homeTeam": {
-                  "type": "string"
-                },
-                "awayTeam": {
-                  "type": "string"
-                },
-                "homeGoals": {
-                  "type": "integer"
-                },
-                "awayGoals": {
-                  "type": "integer"
-                },
-                "status": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
+        "in": "header",
+        "name": "x-rapidapi-key",
+        "description": "Clé API utilisée pour l'authentification."
       }
     }
   },
   "security": [
-    {
-      "ApiKeyAuth": []
-    }
+    { "apiKeyAuth": [] }
   ]
 }
